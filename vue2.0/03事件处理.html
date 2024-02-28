@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>03事件处理</title>
+</head>
+<body>
+<script type="text/javascript" src="../js/vue.js"></script>
+</body>
+<div id="demo">
+    <button v-on:click="showInfo1">点我展示提示信息1</button><br>
+    <button @click="showInfo2">点我展示提示信息2</button><br>
+    <button @click="showInfo3($event, 22)">点我展示提示信息3</button><br>
+</div>
+<script type="text/javascript">
+    let number = '19'
+    let data = {
+        name: 'zhangsan',
+        address: '西安市雁塔区'
+    }
+    var vm = new Vue({
+        data() {
+            return data
+        },
+        methods: {
+            showInfo1() {
+                alert("哈喽！")
+            },
+            showInfo2() {
+                alert("哈喽!！")
+            },
+            showInfo3(a, b) {
+                // console.log(event.target)
+                // console.log(this)
+                console.log(a)
+                console.log(b)
+            }
+        }
+
+    })
+    vm.$mount("#demo")
+
+
+</script>
+</html>

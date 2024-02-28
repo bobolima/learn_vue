@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>05键盘事件</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        *{
+            margin-top: 10px;
+        }
+        .demo1 {
+            height: 50px;
+            background-color: bisque;
+        }
+        .demo2 {
+            height: 50px;
+            background-color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+
+</body>
+<div id="demo">
+    <input type="text" placeholder="按下回车键提示" @keydown.alt="showInfo1"></input>
+</div>
+<script type="text/javascript">
+    let number = '19'
+    let data = {
+        name: 'zhangsan',
+        address: '西安市雁塔区'
+    }
+    var vm = new Vue({
+        data() {
+            return data
+        },
+        methods: {
+            showInfo1(e) {
+                console.log(123)
+            },
+            showInfo2(event) {
+                // event.preventDefault()
+                alert("哈喽!！")
+            },
+            showInfo3() {
+                alert("哈喽!!！")
+            }
+        }
+
+    })
+    vm.$mount("#demo")
+
+
+</script>
+</html>

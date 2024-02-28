@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>04事件修饰符</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        *{
+            margin-top: 10px;
+        }
+        .demo1 {
+            height: 50px;
+            background-color: bisque;
+        }
+        .demo2 {
+            height: 50px;
+            background-color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+
+</body>
+<div id="demo">
+    <!--
+            1.prevent：阻止默认事件调用
+            2.stop：防止事件冒泡 （冒泡：嵌套DOM结构中，沿着父节点向上传播）
+            3.once：事件只触发一次
+    -->
+
+    <a href="https://www.baidu.com" @click.prevent="showInfo2">点我显示提示信息2</a>
+
+    <div class="demo1" @click="showInfo1">
+        <button @click.stop="showInfo1">点我显示提示信息1</button>
+    </div>
+
+    <div class="demo2" @click="showInfo3">
+        <button @click.once="showInfo3">点我显示提示信息3</button>
+    </div>
+</div>
+<script type="text/javascript">
+    let number = '19'
+    let data = {
+        name: 'zhangsan',
+        address: '西安市雁塔区'
+    }
+    var vm = new Vue({
+        data() {
+            return data
+        },
+        methods: {
+            showInfo1() {
+                alert("哈喽！")
+            },
+            showInfo2(event) {
+                // event.preventDefault()
+                alert("哈喽!！")
+            },
+            showInfo3() {
+                alert("哈喽!!！")
+            }
+        }
+
+    })
+    vm.$mount("#demo")
+
+
+</script>
+</html>
