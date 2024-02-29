@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>09监视属性vs计算属性</title>
+    <!--引入vue.js-->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+<!--容器-->
+<div id="demo">
+    姓：<input type="text" v-model="firstName"><br><br>
+    名：<input type="text" v-model="lastName"><br><br>
+    全名：{{fullName}}<br><br>
+</div>
+</body>
+
+<!--
+    1.computed能实现的功能watch都能实现
+    2.vue管理的函数用普通函数写法，不是vue所管理的函数在vue中使用时（如：setTimeout）用箭头写法
+-->
+<script type="text/javascript">
+    var vm = new Vue({
+        data() {
+            return {
+                firstName: '张',
+                lastName: '三',
+                fullName: '张-三'
+            }
+        },
+        methods: {},
+        computed: {
+            // fullName() {
+            //     return this.firstName + '-' + this.lastName
+            // }
+        },
+        watch: {
+            firstName(newValue) {
+                setTimeout(() => {
+                    this.fullName = newValue + '-' + this.lastName
+                }, 1000);
+            },
+            lastName(newValue) {
+                setTimeout(() => {
+                    this.fullName = this.firstName + '-' + newValue
+                }, 1000);
+            }
+        }
+
+    });
+    vm.$mount("#demo")
+</script>
+</html>

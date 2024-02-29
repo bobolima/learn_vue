@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>10绑定class样式</title>
+    <style>
+        .basic {
+            width: 200px;
+            height: 100px;
+            margin: 20px;
+            padding: 10px;
+            border-width: 5px;
+            border-style: solid;
+        }
+
+        .happy {
+            background-color: orange;
+        }
+
+        .normal {
+            background-color: aliceblue;
+        }
+
+        .sad {
+            background-color: green;
+        }
+
+        .custom1 {
+            border-radius: 15px;
+        }
+
+        .custom2 {
+            border-radius: 25px;
+        }
+
+        .custom3 {
+            border-radius: 35px;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript" src="../js/vue.js"></script>
+</body>
+<div id="demo">
+<!--
+    动态绑定class,可以是对象，也可以是数组，也可以是字符串
+-->
+    <div class="basic" :class="styleArr" @click="changeStyleArr">哈喽 世界1</div>
+    <div class="basic" :class="[styleObj,styleMoodObj]" @click="changeStyleObj">哈喽 世界2</div>
+</div>
+<script type="text/javascript">
+    var vm = new Vue({
+        data() {
+            return {
+                name: 'zhangsan',
+                address: 'xi an123',
+                styleArr: [],
+                styleObj: {
+                    custom1: false,
+                    custom2: false,
+                    custom3: false
+                },
+                styleMoodObj: {
+                    happy: false,
+                    normal: false,
+                    sad: false
+                },
+            }
+        },
+        methods: {
+            changeStyleArr() {
+                var temp1 = ['custom1', 'custom2', 'custom3']
+                var randomIndex1 = Math.floor(Math.random() * temp1.length);
+                var temp2 = ['happy', 'normal', 'sad']
+                var randomIndex2 = Math.floor(Math.random() * temp2.length);
+                this.styleArr = [temp1[randomIndex1], temp2[randomIndex2]];
+            },
+            changeStyleObj() {
+                this.changeStyleArr()
+
+                var keys = Object.keys(this.styleObj);
+                var randomIndex = Math.floor(Math.random() * keys.length);
+                var randomKey = keys[randomIndex];
+                this.styleObj[randomKey] = !this.styleObj[randomKey]
+
+                var keys1 = Object.keys(this.styleMoodObj);
+                var randomIndex1 = Math.floor(Math.random() * keys1.length);
+                var randomKey1 = keys1[randomIndex1];
+                this.styleMoodObj[randomKey1] = !this.styleMoodObj[randomKey1]
+            }
+        }
+    });
+    vm.$mount("#demo")
+</script>
+</html>
