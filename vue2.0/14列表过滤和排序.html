@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>14列表过滤和排序</title>
+</head>
+<body>
+<script type="text/javascript" src="../js/vue.js"></script>
+</body>
+<!--计算属性和监视属性能实现的，优先使用计算属性computed-->
+<div id="demo">
+    <div>
+        搜索条件：<input type="text" placeholder="请输入姓名" v-model="keyWords">
+        <button @click="sortType=2">升序</button>
+        <button @click="sortType=1">降序</button>
+        <button @click="sortType=0">原序</button>
+        <ul>
+            <li v-for="(item,index) in newPersons" :key="item.id">
+                {{index}}-{{item.name}}-{{item.age}}
+                <input type="text">
+            </li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var vm = new Vue({
+        data() {
+            return {
+                keyWords: '',
+                sortType: 0,
+                persons: [
+                    {id: '001', name: '马冬梅', age: 21},
+                    {id: '004', name: '周冬雨', age: 19},
+                    {id: '003', name: '周杰伦', age: 20}
+                ],
+            }
+        },
+        methods: {
+            insetInfo() {
+                var lao6 = {id: '006', name: '老六', age: 66}
+                this.persons.unshift(lao6)
+            }
+        },
+        // watch: {
+        //     keyWords: {
+        //         handler(val) {
+        //             console.log("keyWords被修改了")
+        //             this.newPersons = this.persons.filter((item) => {
+        //                 return item.name.indexOf(val) !== -1
+        //             })
+        //         },
+        //         immediate: true
+        //     }
+        // }
+        computed: {
+            newPersons() {
+                let arr = this.persons.filter((item) => {
+                    return item.name.indexOf(this.keyWords) !== -1
+                })
+                if (this.sortType) {
+                    arr.sort((item1, item2) => {
+                        return this.sortType === 1 ? item2.age - item1.age : item1.age - item2.age
+                    })
+                }
+                return arr
+            }
+        }
+    });
+    vm.$mount("#demo")
+</script>
+</html>

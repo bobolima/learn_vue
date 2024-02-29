@@ -8,7 +8,19 @@
 <script type="text/javascript" src="../js/vue.js"></script>
 </body>
 <div id="demo">
-
+    <!--
+        关于 v-for 中绑定key的用法，如果操作过程会导致列表数据结构发生变化，尽量使用数据返回的id作为key
+        关于绑定key的知识点：虚拟DOM中的对比算法
+    -->
+    <div>
+        <button @click.once="insetInfo">点击添加老六</button>
+        <ul>
+            <li v-for="(item,index) in persons" :key="item.id">
+                {{index}}-{{item.name}}-{{item.age}}
+                <input type="text">
+            </li>
+        </ul>
+    </div>
 </div>
 <script type="text/javascript">
     var vm = new Vue({
@@ -16,12 +28,18 @@
             return {
                 name: 'zhangsan',
                 address: 'xi an123',
-                selectValue: 0
+                selectValue: 0,
+                persons: [
+                    {id: '001', name: '张三', age: 18},
+                    {id: '004', name: '李四', age: 19},
+                    {id: '003', name: '王五', age: 20}
+                ]
             }
         },
         methods: {
-            select() {
-                this.selectValue++
+            insetInfo() {
+                var lao6 = {id: '006', name: '老六', age: 66}
+                this.persons.unshift(lao6)
             }
         }
     });
