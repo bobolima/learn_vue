@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>20自定义指令</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+</body>
+<div id="demo">
+    <button @click="n++">点击按钮+1</button>
+    <h2>当前值为：<span v-text="n"></span></h2>
+    <h2>当前值为：<span v-big="n"></span></h2>
+
+    <input type="text" v-fbind :value="n">
+</div>
+
+<div id="demo1">
+    <button @click="x++">点击按钮+1</button>
+    <h2>当前值为：<span v-text="x"></span></h2>
+    <h2>当前值为：<span v-big="x"></span></h2>
+
+    <input type="text" v-fbind :value="x">
+</div>
+<script type="text/javascript">
+    <!--全局指令-->
+    Vue.directive('big', function (element, binding) {
+            element.innerText = binding.value * 10
+        }
+    )
+    Vue.directive('fbind', {
+            bind(element, binding) {
+                element.innerText = binding.value
+            },
+            inserted(element, binding) {
+                element.focus()
+            },
+            update(element, binding) {
+                element.innerText = binding.value
+                element.focus()
+            }
+        }
+    )
+
+    var vm = new Vue({
+        data() {
+            return {
+                n: 18,
+            }
+        },
+        methods: {
+            addNumber() {
+
+            }
+        },
+        // directives: {
+        //     big(element,binding) {
+        //         element.innerText = binding.value*10
+        //     }
+        // }
+
+        // 局部指定，只针对当前vue对象
+        directives: {
+            // big(element, binding) {
+            //     element.innerText = binding.value * 10
+            // },
+            // fbind: {
+            //     bind(element, binding) {
+            //         element.innerText = binding.value
+            //     },
+            //     inserted(element, binding) {
+            //         element.focus()
+            //     },
+            //     update(element, binding) {
+            //         element.innerText = binding.value
+            //         element.focus()
+            //     }
+            // }
+        }
+    });
+    vm.$mount("#demo")
+
+    var vm1 = new Vue({
+        data() {
+            return {
+                x: 18,
+            }
+        },
+        methods: {
+            addNumber() {
+
+            }
+        }
+    });
+    vm1.$mount("#demo1")
+</script>
+</html>

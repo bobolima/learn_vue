@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>19指令</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+</body>
+<div id="demo">
+    <!--
+        v-text 动态数据n替换 '次数：'
+    -->
+    <h2 v-text="n">次数：</h2>
+
+    <!--
+        v-html 能够解析动态数据中的标签（有注入风险，慎用）
+    -->
+    <h2 v-html="htmlTest"></h2>
+
+    <!--
+        v-cloak 本质是个属性，等待Vue实力创建完毕之后并接管容器后删除该属性 （主要解决网速慢导致模板先展示的问题）
+        注意： 需要使用延时数据或js，不做示例
+    -->
+
+    <!--
+        v-once 动态数据只加载一次
+    -->
+    <button @click="n++">点击按钮+1</button>
+    <h2 v-once>次数：{{n}}</h2>
+    <h2>次数：{{n}}</h2>
+
+    <!--
+        v-pre 增加改指令，表示该标签中的值变为静态数据，不会动态渲染，（用于静态数据，提升渲染效率）
+    -->
+    <h2 v-pre>次数：{{n}}</h2>
+
+</div>
+<script type="text/javascript">
+    var vm = new Vue({
+        data() {
+            return {
+                n: 18,
+                htmlTest: '<h1>你好啊</h1>'
+            }
+        },
+        methods: {
+            addNumber() {
+
+            }
+        }
+    });
+    vm.$mount("#demo")
+</script>
+</html>
