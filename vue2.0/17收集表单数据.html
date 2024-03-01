@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>17收集表单数据</title>
+</head>
+<body>
+<script type="text/javascript" src="../js/vue.js"></script>
+</body>
+<div id="demo">
+    <form @submit.prevent="submitInfo">
+        账号：<input type="text" v-model.trim="info.loginId"></input> <br><br>
+
+        密码：<input type="password" v-model="info.password"></input> <br><br>
+
+        年龄：<input type="number" v-model.number="info.age"></input> <br><br>
+
+        性别：
+        男<input type="radio" v-model="info.sex" value="male"></input>
+        女<input type="radio" v-model="info.sex" value="female"></input> <br><br>
+
+        爱好：
+        运动<input type="checkbox" v-model="info.hobby" value="sport"></input>
+        打游戏<input type="checkbox" v-model="info.hobby" value="playGames"></input>
+        学习<input type="checkbox" v-model="info.hobby" value="study"></input> <br><br>
+
+        地区：
+        <select v-model="info.region">
+            <option value="">请选择地区</option>
+            <option value="beijing">北京</option>
+            <option value="shanghai">上海</option>
+            <option value="xi'an">西安</option>
+        </select> <br><br>
+        其它：<textarea v-model.lazy="info.other"></textarea> <br><br>
+        <input type="checkbox" v-model="info.agree"></input><a href="http://www.baidu.com">阅读并接收《用户协议》</a> <br><br>
+        <button>提交</button>
+    </form>
+</div>
+<script type="text/javascript">
+    var vm = new Vue({
+        data() {
+            return {
+                info: {
+                    loginId: '',
+                    password: '',
+                    age: '',
+                    sex: 'male',
+                    hobby: [],
+                    region: '',
+                    other: '',
+                    agree: false
+                }
+            }
+        },
+        methods: {
+            submitInfo (){
+                console.log(JSON.stringify(this.info))
+            }
+        }
+    });
+    vm.$mount("#demo")
+</script>
+</html>
