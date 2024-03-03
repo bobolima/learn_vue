@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>21Vue生命周期</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+</body>
+<div id="demo">
+    <h2 :style="{opacity:slowChange}">欢迎学习Vue</h2>
+    <button @click="stop">点击停止闪烁</button>
+</div>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: "#demo",
+        data() {
+            return {
+                slowChange: 1
+            }
+        },
+        methods: {
+            stop() {
+                this.$destroy()
+            }
+        },
+        beforeCreate() {
+            console.log("beforeCreate")
+            debugger
+        },
+        created() {
+            console.log("created")
+            debugger
+        },
+        beforeMount() {
+            console.log("beforeMount")
+        },
+        mounted() {
+            console.log("mounted")
+            this.temer = setInterval(() => {
+                this.slowChange -= 0.1
+                if (this.slowChange <= 0) {
+                    this.slowChange = 1
+                }
+            }, 100)
+        },
+        beforeUpdate() {
+            console.log("beforeUpdate")
+        },
+        updated() {
+            console.log("updated")
+        },
+        beforeDestroy() {
+            console.log("beforeDestroy")
+            clearInterval(this.temer)
+        },
+        destroyed() {
+            console.log("destroyed")
+        }
+    });
+    // vm.$mount("#demo")
+</script>
+</html>
