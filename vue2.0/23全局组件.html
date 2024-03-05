@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>23全局组件</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+</body>
+<div id="demo1">
+    <h1>学校信息</h1>
+    <School></School>
+    <hr>
+    <h1>学生信息</h1>
+    <Student></Student>
+</div>
+<hr>
+<hr>
+<div id="demo2">
+    <h1>学校信息</h1>
+    <School></School>
+    <hr>
+    <h1>学生信息</h1>
+    <Student></Student>
+
+</div>
+<script type="text/javascript">
+    var School = Vue.extend({
+        // name: 'School',
+        template: `
+          <div>
+            <h3>学校名称：{{ schoolName }}</h3>
+            <h3>学校地址：{{ schoolAddress }}</h3>
+          </div>
+        `,
+        data() {
+            return {
+                schoolName: '清华大学',
+                schoolAddress: '北京',
+            }
+        }
+    })
+
+    var Student = Vue.extend({
+        // name: 'Student',
+        template: `
+          <div>
+<!--            <School></School>-->
+            <h3>姓名：{{ studentName }}</h3>
+            <h3>年龄：{{ studentAge }}</h3>
+          </div>
+        `,
+        // components: {School},
+        data() {
+            return {
+                studentName: '张六',
+                studentAge: '20',
+            }
+        }
+    })
+
+    Vue.component('School', School)
+    Vue.component('Student', Student)
+
+    new Vue({
+        el: '#demo1',
+        data(){
+            return {
+
+            }
+        },
+    })
+
+    new Vue({
+        el: '#demo2',
+        data(){
+            return {
+
+            }
+        },
+    })
+</script>
+</html>
