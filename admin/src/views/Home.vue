@@ -1,27 +1,19 @@
 <template>
     <div>
-
+        首页
     </div>
 </template>
 
 <script>
-    export default {
-        name: "Home",
-        components: {},
-        props: {},
-        computed: {},
-        watch: {},
-        data() {
-            return {};
-        },
-        methods: {},
-        created() {
-        },
-        mounted() {
-        },
-        destroyed() {
-        }
-    };
+export default {
+    name: "Home",
+    data() {
+        return {};
+    },
+    methods: {},
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
