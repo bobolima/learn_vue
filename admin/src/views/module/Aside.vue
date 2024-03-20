@@ -12,7 +12,7 @@
                 active-text-color="#ffd04b"
                 router
         >
-            <el-menu-item index="0">
+            <el-menu-item index="0" route="/home">
                 <template slot="title">
                     <i class="el-icon-s-home"></i>
                     <span>首页</span>

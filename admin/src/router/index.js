@@ -9,16 +9,17 @@ import Role from '../views/role/Role.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: Home
-  },
+
   {
     path: '/index',
     name: 'Index',
     component: Index,
     children: [
+      {
+        path: '/home',
+        name: 'Home',
+        component: Home
+      },
       {
         path: '/user',
         name: 'User',
@@ -37,7 +38,7 @@ const routes = [
     ]
   },
   {
-    path: '/login',
+    path: '/',
     name: 'Login',
     component: () => import('../views/Login.vue')
   }
