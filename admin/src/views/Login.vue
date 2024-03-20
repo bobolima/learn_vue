@@ -10,20 +10,20 @@
             <el-divider direction="vertical"></el-divider>
         </el-col>
         <el-col :span="6">
-            <el-form :model="LoginForm" :rules="rules" ref="LoginForm" label-width="100px" class="demo-ruleForm">
+            <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="用户名" prop="loginId" style="width: 380px">
-                    <el-input v-model="LoginForm.loginId"></el-input>
+                    <el-input v-model="loginForm.loginId"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password" style="width: 380px">
-                    <el-input v-model="LoginForm.password"></el-input>
+                    <el-input v-model="loginForm.password"></el-input>
                 </el-form-item>
                 <el-form-item label="验证码" prop="code">
-                    <el-input v-model="LoginForm.code" style="width: 172px; float: left"></el-input>
-                    <el-image class="verifyCode" :src="require('@/assets/logo.png')"></el-image>
+                    <el-input v-model="loginForm.code" style="width: 172px; float: left"></el-input>
+                    <el-image class="verifyCode" :src="captchaImg"></el-image>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitInfo('LoginForm')">登录</el-button>
-                    <el-button @click="resetInfo('LoginForm')">重置</el-button>
+                    <el-button type="primary" @click="submitInfo('loginForm')">登录</el-button>
+                    <el-button @click="resetInfo('loginForm')">重置</el-button>
                 </el-form-item>
             </el-form>
         </el-col>
@@ -34,11 +34,13 @@ export default {
     name: "Login",
     data() {
         return {
-            LoginForm: {
+            loginForm: {
                 loginId: '',
                 password: '',
-                code: ''
+                code: '',
+                codeId: '',
             },
+            captchaImg: '',
             rules: {
                 loginId: [
                     {required: true, message: '请输入用户名', trigger: 'blur'}
@@ -48,7 +50,7 @@ export default {
                 ],
                 code: [
                     {required: true, message: '请输入验证码', trigger: 'blur'},
-                    {min: 3, max: 5, message: '长度为 5 个字符', trigger: 'blur'}
+                    {min: 5, max: 5, message: '长度为 5 个字符', trigger: 'blur'}
                 ]
             }
         };
@@ -57,7 +59,13 @@ export default {
         submitInfo(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    alert('submit!');
+                    this.$axios.post('/login', this.loginForm).then(res => {
+                        this.$store.commit('SET_TOKEN', res.data.token)
+                        this.$router.push('/index')
+                    }, error => {
+                        this.$message.error(error)
+                        }
+                    )
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -66,8 +74,20 @@ export default {
         },
         resetInfo(formName) {
             this.$refs[formName].resetFields();
+        },
+        getCaptchaImg() {
+            this.$axios.get('/captchaImg').then(res => {
+                this.loginForm.codeId = res.data.codeId
+                this.captchaImg = res.data.captchaImg
+            }, error => {
+                this.$message.error(error)
+            })
         }
+    },
+    created() {
+        this.getCaptchaImg()
     }
+
 }
 </script>
 <style scoped>
