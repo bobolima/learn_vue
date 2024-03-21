@@ -11,14 +11,14 @@ Vue.use(VueRouter)
 const routes = [
 
   {
-    path: '/index',
-    name: 'Index',
-    component: Index,
+    path: '/home',
+    name: 'Home',
+    component: Home,
     children: [
       {
-        path: '/home',
-        name: 'Home',
-        component: Home
+        path: '/index',
+        name: 'Index',
+        component: Index
       },
       {
         path: '/user',
@@ -39,8 +39,14 @@ const routes = [
   },
   {
     path: '/',
-    name: 'Login',
-    component: () => import('../views/Login.vue')
+    component: () => import('../views/Login.vue'),
+    children: [
+      {
+        path: '/login',
+        name: 'Login',
+        component: () => import('../views/Login.vue')
+      },
+    ]
   }
 ]
 

@@ -1,10 +1,12 @@
 <template>
     <el-row type="flex" class="row-bg" justify="center">
         <el-col :xl="6" :lg="7">
-            <h2>欢迎来到admin超级牛逼管理系统</h2>
-            <el-image class="qrcode" :src="require('@/assets/logo.png')"></el-image>
-            <p>第一个管理系统</p>
-            <p>各位路过的大叔大妈过来看看吧</p>
+            <div class="login-left">
+                <h2>欢迎来到admin超级牛逼管理系统</h2>
+                <el-image class="qrcode" :src="require('@/assets/logo.png')"></el-image>
+                <p>第一个管理系统</p>
+                <p>各位路过的大叔大妈过来看看吧</p>
+            </div>
         </el-col>
         <el-col :span="1">
             <el-divider direction="vertical"></el-divider>
@@ -61,7 +63,7 @@ export default {
                 if (valid) {
                     this.$axios.post('/login', this.loginForm).then(res => {
                         this.$store.commit('SET_TOKEN', res.data.token)
-                        this.$router.push('/index')
+                        this.$router.push('/home')
                     }, error => {
                         this.$message.error(error)
                         }
@@ -96,6 +98,9 @@ export default {
     background-color: #fafafa;
     height: 100%;
     align-items: center;
+}
+.login-left {
+    text-align: center;
 }
 
 .el-divider {
