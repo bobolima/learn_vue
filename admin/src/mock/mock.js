@@ -28,4 +28,19 @@ Mock.mock('/login', 'post', () => {
     return Result
 })
 
+Mock.mock('/updatePassword', 'post', () => {
+    Result.code = 200
+    Result.msg = '请求成功'
+    Result.data = {
+    }
+    return Result
+})
+
+Mock.mock('/logout', 'post', () => {
+    Result.code = 200
+    Result.msg = '请求成功'
+    Result.data = {
+    }
+    return Result
+})
 

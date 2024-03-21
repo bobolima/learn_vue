@@ -12,8 +12,10 @@
                         用户xxx<i class="el-icon-arrow-down el-icon--right"></i>
                     </span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>个人中心</el-dropdown-item>
-                            <el-dropdown-item>退出</el-dropdown-item>
+                            <el-dropdown-item>
+                                <router-link to="/personCenter">个人中心</router-link>
+                            </el-dropdown-item>
+                            <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                     <el-link href="https://www.baidu.com" target="_blank">网站</el-link>
@@ -38,7 +40,17 @@
         data() {
             return {};
         },
-        methods: {},
+        methods: {
+            logout() {
+                this.$axios.post('/logout').then(res => {
+                    if (res.code === 200) {
+                        localStorage.clear()
+                        this.$store.commit('LOGOUT')
+                        this.$router.push('/')
+                    }
+                })
+            },
+        },
     }
 </script>
 

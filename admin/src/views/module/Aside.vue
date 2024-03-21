@@ -12,7 +12,7 @@
                 active-text-color="#ffd04b"
                 router
         >
-            <el-menu-item index="0" route="/home">
+            <el-menu-item index="0" route="/index">
                 <template slot="title">
                     <i class="el-icon-s-home"></i>
                     <span>首页</span>
@@ -65,7 +65,14 @@
         data() {
             return {}
         },
-        methods: {}
+        methods: {
+            handleOpen(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            handleClose(key, keyPath) {
+                console.log(key, keyPath);
+            }
+        }
     }
 </script>
 

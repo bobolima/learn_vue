@@ -16,6 +16,11 @@ const routes = [
     component: Home,
     children: [
       {
+        path: '/personCenter',
+        name: 'PersonCenter',
+        component: () => import('../views/setting/PersonCenter.vue'),
+      },
+      {
         path: '/index',
         name: 'Index',
         component: Index
