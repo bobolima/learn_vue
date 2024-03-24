@@ -63,7 +63,7 @@ export default {
                 if (valid) {
                     this.$axios.post('/login', this.loginForm).then(res => {
                         this.$store.commit('SET_TOKEN', res.data.token)
-                        this.$router.push('/home')
+                        this.$router.push('/index')
                     }, error => {
                         this.$message.error(error)
                         }

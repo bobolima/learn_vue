@@ -18,40 +18,15 @@
                     <span>首页</span>
                 </template>
             </el-menu-item>
-            <el-submenu index="1">
+            <el-submenu :index="menu.name" v-for="menu in menuList" :key="menu.name">
                 <template slot="title">
-                    <i class="el-icon-s-operation"></i>
-                    <span>系统管理</span>
+                    <i :class="menu.icon"></i>
+                    <span>{{ menu.title }}</span>
                 </template>
-                <el-menu-item index="user" route="/user">
+                <el-menu-item :index="item.name" v-for="item in menu.children" :key="item.name" :route="item.path">
                     <template slot="title">
-                        <i class="el-icon-s-custom"></i>
-                        <span>用户管理</span>
-                    </template>
-                </el-menu-item>
-                <el-menu-item index="role" route="/role">
-                    <template slot="title">
-                        <i class="el-icon-rank"></i>
-                        <span>角色管理</span>
-                    </template>
-                </el-menu-item>
-                <el-menu-item index="menu" route="/menu">
-                    <template slot="title">
-                        <i class="el-icon-menu"></i>
-                        <span>菜单管理</span>
-                    </template>
-                </el-menu-item>
-            </el-submenu>
-
-            <el-submenu index="2">
-                <template slot="title">
-                    <i class="el-icon-s-tools"></i>
-                    <span>系统工具</span>
-                </template>
-                <el-menu-item index="2-1">
-                    <template slot="title">
-                        <i class="el-icon-s-order"></i>
-                        <span>数据字典</span>
+                        <i :class="item.icon"></i>
+                        <span>{{ item.title }}</span>
                     </template>
                 </el-menu-item>
             </el-submenu>
@@ -63,7 +38,9 @@
     export default {
         name: "Aside",
         data() {
-            return {}
+            return {
+                menuList: this.$store.state.menus.nav
+            }
         },
         methods: {
             handleOpen(key, keyPath) {

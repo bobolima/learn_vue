@@ -12,9 +12,7 @@
                         用户xxx<i class="el-icon-arrow-down el-icon--right"></i>
                     </span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>
-                                <router-link to="/personCenter">个人中心</router-link>
-                            </el-dropdown-item>
+                            <el-dropdown-item @click.native="toPersonCenter">个人中心</el-dropdown-item>
                             <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
@@ -50,6 +48,9 @@
                     }
                 })
             },
+            toPersonCenter() {
+                this.$router.push('/personCenter')
+            }
         },
     }
 </script>
@@ -85,5 +86,9 @@
 
     .el-dropdown-link {
         cursor: pointer;
+    }
+    .person-center {
+        //background-color: #42b983;
+        color: #606266;
     }
 </style>
