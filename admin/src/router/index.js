@@ -2,11 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Index from '../views/Index.vue'
-// import User from '../views/user/User.vue'
-// import Menu from '../views/menu/Menu.vue'
-// import Role from '../views/role/Role.vue'
-import axios from "axios"
-import store from '../store'
+import store from "@/store"
 
 Vue.use(VueRouter)
 
@@ -27,22 +23,6 @@ const routes = [
         name: 'Index',
         component: Index
       },
-      // {
-      //   path: '/user',
-      //   name: 'User',
-      //   component: User,
-      // },
-      // {
-      //   path: '/role',
-      //   name: 'Role',
-      //   component: Role,
-      // },
-      // {
-      //   path: '/menu',
-      //   name: 'Menu',
-      //   component: Menu,
-      // }
-
     ]
   },
   {
@@ -57,6 +37,11 @@ const routes = [
     ]
   }
 ]
+// 解决router.push()到当前路由报错
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 const router = new VueRouter({
   mode: 'history',
@@ -64,59 +49,19 @@ const router = new VueRouter({
   routes
 })
 
+let isFirstNavigation = true;
 router.beforeEach((to, from, next) => {
-  console.log(store.state.menus.hasRoute)
-  if (!store.state.menus.hasRoute) {
-    axios.get('/menu/nav', {
-      headers: {
-        Authorization: localStorage.getItem('token')
-      }
-    }).then(res => {
-      let resData = res.data.data
-      // 获取菜单
-      store.commit('SET_MENUS', resData.nav)
-      // 获取权限
-      store.commit('SET_AUTHORITY', resData.authority)
-
-
-      // let newRoutes = router.options.routes
-      resData.nav.forEach(menu => {
-        if (menu.children) {
-          menu.children.forEach(e => {
-            // 转成路由
-            let route = menuToRoute(e)
-            // 把路由添加到路管理器中
-            if (route) {
-              let homeRoutes = router.options.routes.find(item => item.path === '/home')
-              let hasRoute = false
-              homeRoutes.children.forEach(e => {
-                hasRoute = (e.path === route.path)
-              })
-              if (!hasRoute) {
-                router.addRoute('Home', route)
-                // console.log(router.options)
-                // console.log('添加路由', route.name)
-              }
-            }
-          })
-        }
-      })
-      store.commit('UPDATE_HAS_ROUTE_STATUS', true)
-      // router.addRoutes(newRoutes)
-    })
-  }
-  next()
-})
-
-const menuToRoute = (menu) => {
-  return {
-    name: menu.name,
-    path: menu.path,
-    component: () => import('../views' + menu.component),
-    meta: {
-      icon: menu.icon,
-      title: menu.title
+  if (isFirstNavigation) {
+    isFirstNavigation = false;
+    if (!from.name) {
+      store.dispatch("getMenusForApi", true)
+    } else if (!to.name) {
+      store.dispatch("getMenusForApi", false)
     }
   }
-}
+  next();
+})
+
+
+
 export default router

@@ -39,7 +39,11 @@
         name: "Aside",
         data() {
             return {
-                menuList: this.$store.state.menus.nav
+            }
+        },
+        computed: {
+            menuList() {
+                return this.$store.state.menus.nav;
             }
         },
         methods: {
@@ -48,19 +52,22 @@
             },
             handleClose(key, keyPath) {
                 console.log(key, keyPath);
-            }
-        }
+            },
+        },
+
     }
 </script>
 
 <style scoped>
     .el-aside {
         background-color: #D3DCE6;
-        color: #333;
         text-align: left;
         line-height: 200px;
     }
     .el-menu-vertical-demo {
         height: 100%;
+    }
+    .el-menu {
+        border: none !important;
     }
 </style>

@@ -21,6 +21,7 @@
                 </div>
             </el-header>
             <el-main>
+                <Tab class="tab"></Tab>
                 <router-view></router-view>
             </el-main>
         </el-container>
@@ -29,11 +30,13 @@
 
 <script>
     import Aside from './module/Aside.vue'
+    import Tab from './module/Tab.vue'
 
     export default {
         name: "Home",
         components: {
-            Aside
+            Aside,
+            Tab
         },
         data() {
             return {};
@@ -67,6 +70,7 @@
         color: #333;
         text-align: center;
         line-height: 60px;
+        width: 100%;
     }
 
     .person-menu {
@@ -82,13 +86,17 @@
         color: #333;
         text-align: center;
         line-height: 160px;
+        padding: 0;
+    }
+    .tab {
+        padding: 0;
+        line-height: 10px;
     }
 
     .el-dropdown-link {
         cursor: pointer;
     }
     .person-center {
-        //background-color: #42b983;
         color: #606266;
     }
 </style>

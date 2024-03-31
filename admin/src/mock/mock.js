@@ -61,7 +61,7 @@ Mock.mock('/menu/nav', 'get', () => {
                         title: '用户管理',
                         icon: 'el-icon-s-custom',
                         path: '/user',
-                        component: '/user/User.vue',
+                        component: 'views/user/User.vue',
                         children: []
                     },
                     {
@@ -69,7 +69,7 @@ Mock.mock('/menu/nav', 'get', () => {
                         title: '角色管理',
                         icon: 'el-icon-rank',
                         path: '/role',
-                        component: '/role/Role.vue',
+                        component: 'views/role/Role.vue',
                         children: []
                     },
                     {
@@ -77,7 +77,7 @@ Mock.mock('/menu/nav', 'get', () => {
                         title: '菜单管理',
                         icon: 'el-icon-menu',
                         path: '/menu',
-                        component: '/menu/Menu.vue',
+                        component: 'views/menu/Menu.vue',
                         children: []
                     }
                 ]
