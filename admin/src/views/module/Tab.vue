@@ -1,12 +1,7 @@
 <template>
-    <el-tabs v-model="editableTabsValue" type="card" editable @edit="handleTabsEdit">
-        <el-tab-pane
-                :key="item.name"
-                v-for="item in editableTabs"
-                :label="item.title"
-                :name="item.name"
-        >
-            {{item.content}}
+    <el-tabs v-model="tabsValue" type="card" closable  @tab-remove="removeTab"  @tab-click="handleClick" >
+        <el-tab-pane v-for="item in levelList" :key="item.name" :name="item.path" >
+            <span slot="label" >{{item.name}}</span>
         </el-tab-pane>
     </el-tabs>
 </template>
@@ -15,47 +10,58 @@ export default {
     name: "Tab",
     data() {
         return {
-            editableTabsValue: '2',
-            editableTabs: [{
-                title: 'Tab 1',
-                name: '1',
-                content: 'Tab 1 content'
-            }, {
-                title: 'Tab 2',
-                name: '2',
-                content: 'Tab 2 content'
-            }],
-            tabIndex: 2
+            tabsValue: this.$route.path,
+            levelList: JSON.parse(sessionStorage.getItem("tabs")) || [],
         }
     },
-    methods: {
-        handleTabsEdit(targetName, action) {
-            if (action === 'add') {
-                let newTabName = ++this.tabIndex + '';
-                this.editableTabs.push({
-                    title: 'New Tab',
-                    name: newTabName,
-                    content: 'New Tab content'
-                });
-                this.editableTabsValue = newTabName;
+    created(){
+        this.start()
+    },
+    watch: {
+        $route() {
+            this.start()
+        },
+        levelList(value) {
+            console.log("123")
+            if (value.length <= 0) {
+                this.$router.push('/index')
             }
-            if (action === 'remove') {
-                let tabs = this.editableTabs;
-                let activeName = this.editableTabsValue;
-                if (activeName === targetName) {
-                    tabs.forEach((tab, index) => {
-                        if (tab.name === targetName) {
-                            let nextTab = tabs[index + 1] || tabs[index - 1];
-                            if (nextTab) {
-                                activeName = nextTab.name;
-                            }
-                        }
+            sessionStorage.setItem('tabs', JSON.stringify(value));
+        },
+    },
+    methods: {
+        start() {
+            let matched = this.$route.matched;
+            if (this.levelList.length === 0 && matched[1].path === '/index') {
+                console.log("回到首页")
+            } else {
+                const found = this.levelList.some((item) => item.path === matched[1].path);
+                if (!found) {
+                    this.$set(this.levelList, this.levelList.length, {
+                        name: matched[1].name,
+                        path: matched[1].path,
                     });
                 }
-
-                this.editableTabsValue = activeName;
-                this.editableTabs = tabs.filter(tab => tab.name !== targetName);
             }
+        },
+        handleClick(tab) {
+            this.$router.push(tab.name);
+        },
+        removeTab(targetName) {
+            let tabs = this.levelList;
+            let activeName = this.tabsValue;
+            if (activeName === targetName) {
+                tabs.forEach((tab, index) => {
+                    if (tab.path === targetName) {
+                        let nextTab = tabs[index + 1] || tabs[index - 1];
+                        if (nextTab) {
+                            this.tabsValue = nextTab.path;
+                            this.$router.push(nextTab.path)
+                        }
+                    }
+                });
+            }
+            this.levelList = this.levelList.filter(tab => tab.path !== targetName);
         }
     }
 }
