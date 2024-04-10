@@ -1,7 +1,7 @@
 <template>
     <el-tabs v-model="tabsValue" type="card" closable  @tab-remove="removeTab"  @tab-click="handleClick" >
         <el-tab-pane v-for="item in levelList" :key="item.name" :name="item.path" >
-            <span slot="label" >{{item.name}}</span>
+            <span slot="label" >{{item.title}}</span>
         </el-tab-pane>
     </el-tabs>
 </template>
@@ -22,7 +22,6 @@ export default {
             this.start()
         },
         levelList(value) {
-            console.log("123")
             if (value.length <= 0) {
                 this.$router.push('/index')
             }
@@ -32,14 +31,14 @@ export default {
     methods: {
         start() {
             let matched = this.$route.matched;
-            if (this.levelList.length === 0 && matched[1].path === '/index') {
-                console.log("回到首页")
-            } else {
+            if (!(this.levelList.length === 0 && matched[1].path === '/index')) {
                 const found = this.levelList.some((item) => item.path === matched[1].path);
+                this.tabsValue = matched[1].path
                 if (!found) {
                     this.$set(this.levelList, this.levelList.length, {
                         name: matched[1].name,
                         path: matched[1].path,
+                        title: matched[1].meta.title
                     });
                 }
             }

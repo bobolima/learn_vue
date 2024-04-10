@@ -16,11 +16,17 @@ const routes = [
       {
         path: '/personCenter',
         name: 'PersonCenter',
+        meta: {
+          title: '个人中心'
+        },
         component: () => import('../views/setting/PersonCenter.vue'),
       },
       {
         path: '/index',
         name: 'Index',
+        meta: {
+          title: '首页'
+        },
         component: Index
       },
     ]
